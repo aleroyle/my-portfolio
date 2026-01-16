@@ -27,6 +27,10 @@
         .toolkit-collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(transparent, white); pointer-events: none; }
         .toolkit-expanded { max-height: none; }
         .toolkit-expanded::after { display: none; }
+        
+        /* Education Card Styling */
+        .edu-card { border: 1px solid var(--airbnb-border); border-radius: 12px; padding: 24px; transition: box-shadow 0.2s ease; }
+        .edu-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
     </style>
 </head>
 <body class="antialiased">
@@ -67,7 +71,8 @@
             </div>
         </section>
 
-        <section class="space-y-8 pb-20">
+        <!-- Experience Explorer -->
+        <section class="space-y-8">
             <div class="flex border-b border-[#EBEBEB] overflow-x-auto">
                 <button onclick="filterExperience('all')" id="btn-all" class="filter-tab active whitespace-nowrap">All</button>
                 <button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab whitespace-nowrap">Strategy</button>
@@ -79,9 +84,46 @@
                 <div id="detailView" class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm min-h-[500px]"></div>
             </div>
         </section>
+
+        <!-- Education Section -->
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold border-b border-[#EBEBEB] pb-4">Education</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="edu-card space-y-3">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-lg">University of Michigan</h4>
+                        <span class="text-sm font-semibold text-[#717171]">2019 – 2020</span>
+                    </div>
+                    <p class="text-[#222222] font-medium">Master of Arts: Design and Technologies for Learning</p>
+                    <div class="flex gap-4 text-sm text-[#717171]">
+                        <span>Ann Arbor, MI</span>
+                        <span class="font-bold text-[#FF385C]">GPA 4.0/4.0</span>
+                    </div>
+                </div>
+                <div class="edu-card space-y-3">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-lg">Shanghai International Studies University</h4>
+                        <span class="text-sm font-semibold text-[#717171]">2009 – 2013</span>
+                    </div>
+                    <p class="text-[#222222] font-medium">BA: Italian Language and Literature</p>
+                    <div class="flex gap-4 text-sm text-[#717171]">
+                        <span>Shanghai, China</span>
+                        <span class="font-bold text-[#FF385C]">GPA 3.56/4.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
     <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12 px-12 text-xs text-[#717171]">
-        <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
+            <div class="flex gap-6">
+                <span class="font-semibold text-[#222222]">English (Fluent)</span>
+                <span class="font-semibold text-[#222222]">Mandarin (Native)</span>
+                <span class="font-semibold text-[#222222]">Italian (Intermediate)</span>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -89,7 +131,7 @@
             competencies: { labels: ['Product Mgmt', 'Data Warehousing', 'ML Pipelines', 'Platform APIs', 'Automation', 'UX Research', 'Lean Startup', 'Agile'], data: [9.5, 9, 9, 9.5, 8.5, 8, 9, 9] },
             toolkit: [
                 { category: 'Data Platform', icon: '📊', tools: ['BigQuery', 'Datahub', 'Monte Carlo', 'Kafka'] },
-                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'Google Analytics', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
+                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'GA', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
                 { category: 'E-commerce', icon: '🛒', tools: ['Magento', 'CommerceTool', 'Algolia', 'Vue Storefront'] },
                 { category: 'UX Design', icon: '🎨', tools: ['Figma', 'Sketch', 'Adobe XD', 'Invision', 'Miro'] },
                 { category: 'Creative/Other', icon: '🎬', tools: ['InDesign', 'Fresco', 'Premiere Pro'] }
