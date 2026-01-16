@@ -16,14 +16,14 @@
             --airbnb-bg-light: #F7F7F7;
         }
         body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: var(--airbnb-dark); }
-        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 350px; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 320px; }
         .role-card { transition: box-shadow 0.2s ease, transform 0.1s ease; cursor: pointer; border: 1px solid var(--airbnb-border); border-radius: 12px; padding: 16px; }
         .role-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
         .role-card.active { border: 2px solid var(--airbnb-dark); background-color: var(--airbnb-bg-light); }
-        .filter-tab { padding: 12px 16px; color: var(--airbnb-secondary); font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; }
+        .filter-tab { padding: 12px 16px; color: var(--airbnb-secondary); font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; cursor: pointer; }
         .filter-tab.active { color: var(--airbnb-dark); border-bottom: 2px solid var(--airbnb-dark); }
         .tool-pill { display: inline-flex; align-items: center; padding: 6px 12px; background-color: white; border: 1px solid var(--airbnb-border); border-radius: 8px; font-size: 13px; color: var(--airbnb-dark); margin: 0 4px 8px 0; }
-        .toolkit-collapsed { max-height: 420px; overflow: hidden; position: relative; }
+        .toolkit-collapsed { max-height: 400px; overflow: hidden; position: relative; }
         .toolkit-collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(transparent, white); pointer-events: none; }
         .toolkit-expanded { max-height: none; }
         .toolkit-expanded::after { display: none; }
@@ -45,12 +45,14 @@
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#222222]">Data Product Lead scaling high-impact platforms.</h1>
             <p class="mt-6 text-xl text-[#717171] leading-relaxed">Strategic leader with <span class="text-[#222222] font-semibold">8+ years</span> of experience transforming legacy architectures into modular service ecosystems for <span class="text-[#222222] font-semibold">60+ global teams</span>.</p>
         </section>
+        
         <section class="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-[#EBEBEB] py-12">
             <div><p class="text-3xl font-extrabold tracking-tighter">60+</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">30%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Complaint Reduction</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">40%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Faster Shipping</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">5%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Top-line CLV Uplift</p></div>
         </section>
+
         <section class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div class="space-y-4">
                 <h3 class="text-xl font-bold">Expertise & Knowledge</h3>
@@ -59,52 +61,180 @@
             <div class="space-y-4">
                 <h3 class="text-xl font-bold">Technical Toolkit</h3>
                 <div id="toolkitWrapper" class="toolkit-collapsed"><div id="toolkitGrid" class="space-y-8"></div></div>
-                <button id="toggleToolkitBtn" onclick="toggleToolkit()" class="w-full py-3 border border-black rounded-lg font-bold">Show all tools</button>
+                <button id="toggleToolkitBtn" onclick="toggleToolkit()" class="w-full py-3 border border-black rounded-lg font-bold mt-4">Show all tools</button>
             </div>
         </section>
+
         <section class="space-y-8 pb-20">
-            <div class="flex border-b border-[#EBEBEB]"><button onclick="filterExperience('all')" id="btn-all" class="filter-tab active">All</button><button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab">Strategy</button><button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab">Technical</button><button onclick="filterExperience('business')" id="btn-business" class="filter-tab">Business</button></div>
+            <div class="flex border-b border-[#EBEBEB] overflow-x-auto">
+                <button onclick="filterExperience('all')" id="btn-all" class="filter-tab active whitespace-nowrap">All</button>
+                <button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab whitespace-nowrap">Strategy</button>
+                <button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab whitespace-nowrap">Technical</button>
+                <button onclick="filterExperience('business')" id="btn-business" class="filter-tab whitespace-nowrap">Business</button>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                <div id="roleList" class="lg:col-span-1 space-y-4 max-h-[600px] overflow-y-auto pr-2"></div>
-                <div id="detailView" class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm"></div>
+                <div id="roleList" class="lg:col-span-1 space-y-4 max-h-[700px] overflow-y-auto pr-2 custom-scroll"></div>
+                <div id="detailView" class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm min-h-[500px]"></div>
             </div>
         </section>
     </main>
     <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12 px-12 text-xs text-[#717171]">
         <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
     </footer>
+
     <script>
         const resumeData = {
             competencies: { labels: ['Product Mgmt', 'Data Warehousing', 'ML Pipelines', 'Platform APIs', 'Automation', 'UX Research', 'Lean Startup', 'Agile'], data: [9.5, 9, 9, 9.5, 8.5, 8, 9, 9] },
             toolkit: [
                 { category: 'Data Platform', icon: '📊', tools: ['BigQuery', 'Datahub', 'Monte Carlo', 'Kafka'] },
-                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'GA', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
+                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'Google Analytics', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
                 { category: 'E-commerce', icon: '🛒', tools: ['Magento', 'CommerceTool', 'Algolia', 'Vue Storefront'] },
-                { category: 'UX Design', icon: '🎨', tools: ['Figma', 'Sketch', 'Adobe XD', 'Invision', 'Miro'] }
+                { category: 'UX Design', icon: '🎨', tools: ['Figma', 'Sketch', 'Adobe XD', 'Invision', 'Miro'] },
+                { category: 'Creative/Other', icon: '🎬', tools: ['InDesign', 'Fresco', 'Premiere Pro'] }
             ],
             roles: [
-                { id: 'ovo', company: 'OVO Energy', title: 'Senior Product Manager', period: 'Jan 2023 – Present', location: 'London, UK', summary: 'Leading internal platform teams to build API-first and data-product foundations.', achievements: [{ text: 'Architected modular "LEGO-block" service architecture for core APIs.', tags: ['strategy', 'technical'] }, { text: 'Launched a plug-and-play internal data marketplace.', tags: ['strategy', 'technical'] }, { text: 'Reduced customer complaints by 30%.', tags: ['business', 'technical'] }] },
-                { id: 'lovecrafts', company: 'LoveCrafts', title: 'Product Manager', period: 'May 2022 – Oct 2022', location: 'London, UK', summary: 'Managed website re-platforming and search optimization.', achievements: [{ text: 'Launched Algolia Search MVP, increasing CTR by 15%.', tags: ['business', 'technical'] }, { text: 'Increased weekly average CM2% by 10%.', tags: ['business', 'strategy'] }] }
+                {
+                    id: 'ovo',
+                    company: 'OVO Energy',
+                    title: 'Senior Product Manager (Data & Platform)',
+                    period: 'Jan 2023 – Present',
+                    location: 'London, UK',
+                    summary: 'Leading internal platform teams to build API-first and data-product foundations for 60+ engineering teams.',
+                    achievements: [
+                        { text: 'Architected modular "LEGO-block" service layer for Customer, Orders, and Contracts APIs, enabling 60+ teams to ship 40% faster.', tags: ['strategy', 'technical'] },
+                        { text: 'Launched an internal data marketplace with automated governance, enabling owners to publish high-quality, trusted data products.', tags: ['strategy', 'technical'] },
+                        { text: 'Curated historical email datasets and enhanced pipelines to enable AI Customer Agent (AVA), reducing manual meter read inquiries.', tags: ['technical', 'business'] },
+                        { text: 'Reduced customer complaints by 30% through GenAI root-cause tooling and Salesforce-to-BigQuery pipelines.', tags: ['business', 'technical'] },
+                        { text: 'Automated NPS triggers, increasing survey coverage from 20% to 75% (150K additional surveys annually).', tags: ['business', 'technical'] },
+                        { text: 'Accelerated executive reporting cycles by 50% and improved data availability by 40% through centralized data assets.', tags: ['technical', 'business'] }
+                    ]
+                },
+                {
+                    id: 'lovecrafts',
+                    company: 'LoveCrafts',
+                    title: 'Product Manager (Search & Discovery)',
+                    period: 'May 2022 – Oct 2022',
+                    location: 'London, UK',
+                    summary: 'Managed high-stakes website re-platforming and marketplace optimization.',
+                    achievements: [
+                        { text: 'Re-platformed Search, Category, and Library features with zero negative impact on SEO or conversion.', tags: ['technical'] },
+                        { text: 'Launched Algolia Search MVP, increasing click-through rate of search results by 15%.', tags: ['business', 'technical'] },
+                        { text: 'Prioritized high-margin (CM2) products via sort algorithms, increasing weekly average CM2% by 10%.', tags: ['business', 'strategy'] }
+                    ]
+                },
+                {
+                    id: 'booth',
+                    company: 'UChicago Booth',
+                    title: 'Assistant Director, Digital PM',
+                    period: 'June 2021 – Feb 2022',
+                    location: 'Chicago, IL',
+                    summary: 'Led technical phases of marketing predictive modeling and Hadoop data warehousing.',
+                    achievements: [
+                        { text: 'Scaled marketing spend predictive targeting platform from single-region MVP to global coverage.', tags: ['strategy', 'technical'] },
+                        { text: 'Led delivery of Booth\'s first Hadoop data warehouse, ensuring on-time and in-scope delivery.', tags: ['technical'] },
+                        { text: 'Led the auditing and analytics of large data sets for MBA ranking submissions to retain top-5 global status.', tags: ['business', 'technical'] }
+                    ]
+                },
+                {
+                    id: 'nsf',
+                    company: 'NSF i-Corps',
+                    title: 'Entrepreneur Lead',
+                    period: 'May 2020 – Sept 2020',
+                    location: 'Ann Arbor, MI',
+                    summary: 'Led discovery and business modeling for academic R&D simulation software.',
+                    achievements: [
+                        { text: 'Conducted 130+ customer discovery interviews using Lean Startup methodology to reach product-market fit.', tags: ['strategy'] },
+                        { text: 'Identified client pain points and sold the first pilot contract to an enterprise client.', tags: ['business'] }
+                    ]
+                }
             ]
         };
+
         function initCharts() {
-            new Chart(document.getElementById('competencyChart'), { type: 'radar', data: { labels: resumeData.competencies.labels, datasets: [{ data: resumeData.competencies.data, backgroundColor: 'rgba(255, 56, 92, 0.1)', borderColor: '#FF385C', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { display: false } } }, plugins: { legend: { display: false } } } });
+            new Chart(document.getElementById('competencyChart'), {
+                type: 'radar',
+                data: {
+                    labels: resumeData.competencies.labels,
+                    datasets: [{
+                        data: resumeData.competencies.data,
+                        backgroundColor: 'rgba(255, 56, 92, 0.1)',
+                        borderColor: '#FF385C',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FF385C'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { display: false }, grid: { color: '#EBEBEB' }, pointLabels: { font: { family: 'Inter', weight: 600, size: 10 } } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
         }
+
         function renderToolkit() {
-            document.getElementById('toolkitGrid').innerHTML = resumeData.toolkit.map(cat => `<div><h4 class="font-bold text-sm mb-2">${cat.icon} ${cat.category}</h4><div class="flex flex-wrap">${cat.tools.map(t => `<div class="tool-pill">${t}</div>`).join('')}</div></div>`).join('');
+            document.getElementById('toolkitGrid').innerHTML = resumeData.toolkit.map(cat => `
+                <div>
+                    <h4 class="font-bold text-sm mb-2">${cat.icon} ${cat.category}</h4>
+                    <div class="flex flex-wrap">${cat.tools.map(t => `<div class="tool-pill">${t}</div>`).join('')}</div>
+                </div>
+            `).join('');
         }
-        function toggleToolkit() { const w = document.getElementById('toolkitWrapper'); const b = document.getElementById('toggleToolkitBtn'); if(w.classList.contains('toolkit-collapsed')){ w.classList.replace('toolkit-collapsed', 'toolkit-expanded'); b.innerText = 'Show less'; } else { w.classList.replace('toolkit-expanded', 'toolkit-collapsed'); b.innerText = 'Show all tools'; } }
-        let currentFilter = 'all'; let activeRoleId = 'ovo';
+
+        function toggleToolkit() {
+            const w = document.getElementById('toolkitWrapper');
+            const b = document.getElementById('toggleToolkitBtn');
+            if(w.classList.contains('toolkit-collapsed')){
+                w.classList.replace('toolkit-collapsed', 'toolkit-expanded');
+                b.innerText = 'Show less';
+            } else {
+                w.classList.replace('toolkit-expanded', 'toolkit-collapsed');
+                b.innerText = 'Show all tools';
+            }
+        }
+
+        let currentFilter = 'all';
+        let activeRoleId = 'ovo';
+
         function renderRoleList() {
-            document.getElementById('roleList').innerHTML = resumeData.roles.map(role => `<div onclick="selectRole('${role.id}')" class="role-card ${role.id === activeRoleId ? 'active' : ''}"><h4 class="font-bold text-sm">${role.company}</h4><p class="text-xs text-[#717171]">${role.title}</p><p class="text-[11px] mt-2 border-t pt-2">${role.summary}</p></div>`).join('');
+            document.getElementById('roleList').innerHTML = resumeData.roles.map(role => `
+                <div onclick="selectRole('${role.id}')" class="role-card ${role.id === activeRoleId ? 'active' : ''}">
+                    <div class="flex justify-between items-start mb-1">
+                        <h4 class="font-bold text-sm uppercase tracking-tight">${role.company}</h4>
+                        <span class="text-[10px] text-[#717171] font-bold">${role.period.split(' –')[0]}</span>
+                    </div>
+                    <p class="text-xs text-[#717171] font-semibold">${role.title}</p>
+                    <p class="text-[11px] mt-2 border-t pt-2">${role.summary}</p>
+                </div>
+            `).join('');
         }
+
         function renderDetailView() {
             const role = resumeData.roles.find(r => r.id === activeRoleId);
             const filtered = role.achievements.filter(a => currentFilter === 'all' || a.tags.includes(currentFilter));
-            document.getElementById('detailView').innerHTML = `<h3 class="text-3xl font-extrabold tracking-tighter">${role.company}</h3><p class="text-lg text-[#717171] mb-6">${role.title}</p><div class="bg-[#F7F7F7] p-6 rounded-xl mb-6"><p>"${role.summary}"</p></div><ul class="space-y-4">${filtered.map(a => `<li class="flex gap-4"><div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div><p>${a.text}</p></li>`).join('')}</ul>`;
+            document.getElementById('detailView').innerHTML = `
+                <h3 class="text-3xl font-extrabold tracking-tighter">${role.company}</h3>
+                <p class="text-lg text-[#717171] mb-6">${role.title}</p>
+                <div class="bg-[#F7F7F7] p-6 rounded-xl mb-6"><p>"${role.summary}"</p></div>
+                <ul class="space-y-4">
+                    ${filtered.map(a => `
+                        <li class="flex gap-4">
+                            <div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div>
+                            <p>${a.text.replace(/(\d+%)|(\d+)/g, '<span class="font-bold text-[#FF385C]">$1$2</span>')}</p>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
         }
+
         function selectRole(id) { activeRoleId = id; renderRoleList(); renderDetailView(); }
-        function filterExperience(t) { currentFilter = t; document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active')); document.getElementById('btn-'+t).classList.add('active'); renderDetailView(); }
+        function filterExperience(t) { 
+            currentFilter = t; 
+            document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active')); 
+            document.getElementById('btn-'+t).classList.add('active'); 
+            renderDetailView(); 
+        }
+
         window.onload = () => { initCharts(); renderToolkit(); renderRoleList(); selectRole('ovo'); };
     </script>
 </body>
