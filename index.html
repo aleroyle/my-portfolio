@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
         :root {
             --airbnb-rausch: #FF385C;
             --airbnb-dark: #222222;
@@ -15,163 +16,329 @@
             --airbnb-border: #DDDDDD;
             --airbnb-bg-light: #F7F7F7;
         }
-        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: var(--airbnb-dark); }
-        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 320px; }
-        .role-card { transition: box-shadow 0.2s ease, transform 0.1s ease; cursor: pointer; border: 1px solid var(--airbnb-border); border-radius: 12px; padding: 16px; }
-        .role-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
-        .role-card.active { border: 2px solid var(--airbnb-dark); background-color: var(--airbnb-bg-light); }
-        .filter-tab { padding: 12px 16px; color: var(--airbnb-secondary); font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; cursor: pointer; }
-        .filter-tab.active { color: var(--airbnb-dark); border-bottom: 2px solid var(--airbnb-dark); }
-        .tool-pill { display: inline-flex; align-items: center; padding: 6px 12px; background-color: white; border: 1px solid var(--airbnb-border); border-radius: 8px; font-size: 13px; color: var(--airbnb-dark); margin: 0 4px 8px 0; }
-        .toolkit-collapsed { max-height: 400px; overflow: hidden; position: relative; }
-        .toolkit-collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(transparent, white); pointer-events: none; }
-        .toolkit-expanded { max-height: none; }
-        .toolkit-expanded::after { display: none; }
-        
-        /* Education Card Styling */
-        .edu-card { border: 1px solid var(--airbnb-border); border-radius: 12px; padding: 24px; transition: box-shadow 0.2s ease; }
-        .edu-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+            color: var(--airbnb-dark);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 320px;
+        }
+
+        /* Airbnb Listing Style Cards */
+        .role-card {
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+            cursor: pointer;
+            border: 1px solid var(--airbnb-border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .role-card:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        .role-card.active {
+            border: 2px solid var(--airbnb-dark);
+            background-color: var(--airbnb-bg-light);
+        }
+
+        /* Tab buttons */
+        .filter-tab {
+            padding: 12px 16px;
+            color: var(--airbnb-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .filter-tab:hover {
+            color: var(--airbnb-dark);
+            border-bottom: 2px solid var(--airbnb-border);
+        }
+        .filter-tab.active {
+            color: var(--airbnb-dark);
+            border-bottom: 2px solid var(--airbnb-dark);
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: var(--airbnb-border);
+            border-radius: 10px;
+        }
+
+        /* Tool Pill Style */
+        .tool-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: white;
+            border: 1px solid var(--airbnb-border);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--airbnb-dark);
+            margin: 0 4px 8px 0;
+            transition: border-color 0.2s;
+        }
+        .tool-pill:hover {
+            border-color: var(--airbnb-dark);
+        }
+
+        .tool-category-header {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--airbnb-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-show-more {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--airbnb-dark);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--airbnb-dark);
+            transition: background-color 0.2s;
+            margin-top: 16px;
+        }
+        .btn-show-more:hover {
+            background-color: var(--airbnb-bg-light);
+        }
+
+        .toolkit-collapsed {
+            max-height: 420px;
+            overflow: hidden;
+            position: relative;
+        }
+        .toolkit-collapsed::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(transparent, white);
+            pointer-events: none;
+        }
+        .toolkit-expanded::after {
+            display: none;
+        }
+        .toolkit-expanded {
+            max-height: none;
+        }
     </style>
 </head>
 <body class="antialiased">
+
+    <!-- Header -->
     <header class="sticky top-0 z-50 bg-white border-b border-[#EBEBEB] px-6 py-4 md:px-12 flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-[#FF385C] flex items-center justify-center"><span class="text-white font-bold text-lg">A</span></div>
+            <div class="w-8 h-8 rounded-full bg-[#FF385C] flex items-center justify-center">
+                <span class="text-white font-bold text-lg">A</span>
+            </div>
             <span class="text-[#FF385C] font-bold text-xl tracking-tighter">Alison Wang</span>
         </div>
-        <div class="hidden md:flex items-center border border-[#DDDDDD] rounded-full px-4 py-2 shadow-sm hover:shadow-md transition cursor-pointer gap-4 text-sm font-medium">
-            <span>alisonwg.royle@gmail.com</span>
-            <div class="w-7 h-7 bg-[#717171] rounded-full flex items-center justify-center"><span class="text-white text-[10px]">AW</span></div>
-        </div>
+        <!-- Updated: Email display replaced with Resume Download button -->
+        <a href="AW_26_Resume.pdf" download="Alison_Wang_Resume.pdf" class="hidden md:flex items-center border border-[#DDDDDD] rounded-full px-4 py-2 shadow-sm hover:shadow-md transition cursor-pointer gap-4 text-sm font-bold text-[#222222] decoration-none">
+            <span>Download Resume</span>
+            <div class="w-7 h-7 bg-[#FF385C] rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+            </div>
+        </a>
     </header>
+
     <main class="max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-16">
-        <section class="max-w-4xl">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#222222]">Data Product Lead scaling high-impact platforms.</h1>
+
+        <!-- Hero Section -->
+        <section class="max-w-3xl">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#222222]">
+                Data Product Lead scaling high-impact platforms.
+            </h1>
             <p class="mt-6 text-xl text-[#717171] leading-relaxed">
-                Strategic Data Product Leader with <span class="text-[#222222] font-semibold">10+ years</span> of experience building high-scale data platforms, API-first ecosystems, and AI/ML pipelines. Proven track record in transforming legacy architectures into modular <span class="text-[#222222] font-semibold">"LEGO-block"</span> services and <span class="text-[#222222] font-semibold">"Data Marketplaces"</span> that empower <span class="text-[#222222] font-semibold">40+ engineering teams</span>. Expert in translating complex technical ambiguity into multi-year roadmaps that drive top-line CLV and GenAI readiness.
+                Strategic leader with <span class="text-[#222222] font-semibold">10+ years</span> of experience transforming legacy architectures into modular service ecosystems for <span class="text-[#222222] font-semibold">40+ engineering teams</span>.
             </p>
         </section>
-        
+
+        <!-- KPI Grid -->
         <section class="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-[#EBEBEB] py-12">
-            <div><p class="text-3xl font-extrabold tracking-tighter">40+</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p></div>
-            <div><p class="text-3xl font-extrabold tracking-tighter">30%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Complaint Reduction</p></div>
-            <div><p class="text-3xl font-extrabold tracking-tighter">40%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Faster Shipping</p></div>
-            <div><p class="text-3xl font-extrabold tracking-tighter">5%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Top-line CLV Uplift</p></div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tighter">40+</p>
+                <p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tighter">30%</p>
+                <p class="text-xs text-[#717171] uppercase font-bold mt-1">Complaint Reduction</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tighter">40%</p>
+                <p class="text-xs text-[#717171] uppercase font-bold mt-1">Faster Shipping</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tighter">5%</p>
+                <p class="text-xs text-[#717171] uppercase font-bold mt-1">Top-line CLV Uplift</p>
+            </div>
         </section>
 
+        <!-- Skill Analytics -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Radar Chart -->
             <div class="space-y-4">
-                <h3 class="text-xl font-bold">Expertise & Knowledge</h3>
-                <div class="chart-container"><canvas id="competencyChart"></canvas></div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h3 class="text-xl font-bold">Expertise & Knowledge</h3>
+                        <p class="text-sm text-[#717171]">Industry knowledge and core management frameworks.</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="competencyChart"></canvas>
+                </div>
             </div>
+
+            <!-- Foldable Technical Grid -->
             <div class="space-y-4">
-                <h3 class="text-xl font-bold">Technical Toolkit</h3>
-                <div id="toolkitWrapper" class="toolkit-collapsed"><div id="toolkitGrid" class="space-y-8"></div></div>
-                <button id="toggleToolkitBtn" onclick="toggleToolkit()" class="w-full py-3 border border-black rounded-lg font-bold mt-4">Show all tools</button>
+                <div>
+                    <h3 class="text-xl font-bold">Technical Toolkit</h3>
+                    <p class="text-sm text-[#717171]">Full stack of platforms, analytics, and design tools.</p>
+                </div>
+                <div id="toolkitWrapper" class="toolkit-collapsed">
+                    <div id="toolkitGrid" class="space-y-8">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <button id="toggleToolkitBtn" onclick="toggleToolkit()" class="btn-show-more">
+                    Show all 25+ tools
+                </button>
             </div>
         </section>
 
         <!-- Experience Explorer -->
-        <section class="space-y-8">
-            <div class="flex border-b border-[#EBEBEB] overflow-x-auto">
-                <button onclick="filterExperience('all')" id="btn-all" class="filter-tab active whitespace-nowrap">All</button>
-                <button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab whitespace-nowrap">Strategy</button>
-                <button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab whitespace-nowrap">Technical</button>
-                <button onclick="filterExperience('business')" id="btn-business" class="filter-tab whitespace-nowrap">Business</button>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                <div id="roleList" class="lg:col-span-1 space-y-4 max-h-[700px] overflow-y-auto pr-2 custom-scroll"></div>
-                <div id="detailView" class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm min-h-[500px]"></div>
-            </div>
-        </section>
-
-        <!-- Education Section -->
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold border-b border-[#EBEBEB] pb-4">Education</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="edu-card space-y-3">
-                    <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-lg">University of Michigan</h4>
-                        <span class="text-sm font-semibold text-[#717171]">2019 – 2020</span>
-                    </div>
-                    <p class="text-[#222222] font-medium">Master of Arts: Design and Technologies for Learning</p>
-                    <div class="flex gap-4 text-sm text-[#717171]">
-                        <span>Ann Arbor, MI</span>
-                        <span class="font-bold text-[#FF385C]">GPA 4.0/4.0</span>
-                    </div>
+        <section class="space-y-8 pb-20">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-[#EBEBEB] gap-4">
+                <h2 class="text-2xl font-bold">Experience History</h2>
+                <div class="flex gap-4 overflow-x-auto" id="filterContainer">
+                    <button onclick="filterExperience('all')" id="btn-all" class="filter-tab active">All</button>
+                    <button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab">Strategy</button>
+                    <button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab">Technical</button>
+                    <button onclick="filterExperience('business')" id="btn-business" class="filter-tab">Business</button>
                 </div>
-                <div class="edu-card space-y-3">
-                    <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-lg">Shanghai International Studies University</h4>
-                        <span class="text-sm font-semibold text-[#717171]">2009 – 2013</span>
-                    </div>
-                    <p class="text-[#222222] font-medium">BA: Italian Language and Literature</p>
-                    <div class="flex gap-4 text-sm text-[#717171]">
-                        <span>Shanghai, China</span>
-                        <span class="font-bold text-[#FF385C]">GPA 3.56/4.0</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1 space-y-4 max-h-[650px] overflow-y-auto pr-2 custom-scroll">
+                    <div id="roleList" class="space-y-4"></div>
+                </div>
+                <div class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm min-h-[500px]">
+                    <div id="detailView" class="h-full">
+                        <div class="flex flex-col items-center justify-center h-full text-center text-[#717171] py-20">
+                            <span class="text-4xl mb-4">🏠</span>
+                            <h3 class="text-lg font-bold text-[#222222]">Select a role to view impact</h3>
+                            <p class="mt-2">Choose a milestone on the left to see detailed achievements.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
     </main>
-    <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12 px-12 text-xs text-[#717171]">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
+
+    <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 border-b border-[#DDDDDD] pb-12">
+                <div>
+                    <p class="font-bold text-sm mb-4">Contact Info</p>
+                    <ul class="text-sm text-[#717171] space-y-3">
+                        <li>Email: alisonwg.royle@gmail.com</li>
+                        <li>Phone: +44 7840314423</li>
+                        <li>Location: London, UK</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-sm mb-4">Education</p>
+                    <ul class="text-sm text-[#717171] space-y-3">
+                        <li>MA, University of Michigan (GPA 4.0)</li>
+                        <li>BA, Shanghai Intl Studies University (GPA 3.56)</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-sm mb-4">Links</p>
+                    <ul class="text-sm text-[#717171] space-y-3">
+                        <li><a href="https://www.linkedin.com/in/alisonwangumich" target="_blank" class="hover:underline">LinkedIn</a></li>
+                        <li><a href="https://aleroyle.github.io/my-portfolio/" target="_blank" class="hover:underline">Portfolio</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 flex flex-col md:flex-row justify-between text-xs text-[#717171] gap-4">
+                <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
+            </div>
         </div>
     </footer>
 
     <script>
+        // --- DATA ---
         const resumeData = {
-            competencies: { labels: ['Product Mgmt', 'Data Warehousing', 'ML Pipelines', 'Platform APIs', 'Automation', 'UX Research', 'Lean Startup', 'Agile'], data: [9.5, 9, 9, 9.5, 8.5, 8, 9, 9] },
+            competencies: {
+                labels: ['Product Management', 'Data Warehousing', 'ML Data Pipelines', 'Platform APIs', 'System Automation', 'UX Research', 'Lean Startup', 'Agile/Scrum'],
+                data: [9.5, 9, 9, 9.5, 8.5, 8, 9, 9]
+            },
             toolkit: [
                 { category: 'Data Platform', icon: '📊', tools: ['BigQuery', 'Datahub', 'Monte Carlo', 'Kafka'] },
-                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'GA', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
-                { category: 'E-commerce', icon: '🛒', tools: ['Magento', 'CommerceTool', 'Algolia', 'Vue Storefront'] },
+                { category: 'Product Management', icon: '📋', tools: ['Amplitude', 'Mixpanel', 'Google Analytics', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] },
+                { category: 'E-commerce Stack', icon: '🛒', tools: ['Magento', 'CommerceTool', 'Algolia', 'Vue Storefront'] },
                 { category: 'UX Design', icon: '🎨', tools: ['Figma', 'Sketch', 'Adobe XD', 'Invision', 'Miro'] },
-                { category: 'Creative/Other', icon: '🎬', tools: ['InDesign', 'Fresco', 'Premiere Pro'] }
+                { category: 'Creative Suite', icon: '🎬', tools: ['InDesign', 'Fresco', 'Premiere Pro'] }
             ],
             roles: [
                 {
                     id: 'ovo',
                     company: 'OVO Energy',
-                    title: 'Senior Product Manager (Data & Platform)',
+                    title: 'Senior Product Manager',
                     period: 'Jan 2023 – Present',
                     location: 'London, UK',
-                    summary: 'Leading internal platform teams to build API-first and data-product foundations for 40+ engineering teams.',
+                    summary: 'Leading internal platform teams to build API-first and data-product foundations for OVO’s agentic future.',
                     achievements: [
-                        { text: 'Architected modular "LEGO-block" service layer for Customer, Orders, and Contracts APIs, enabling 40+ teams to ship 40% faster.', tags: ['strategy', 'technical'] },
-                        { text: 'Launched an internal data marketplace with automated governance, enabling owners to publish high-quality, trusted data products.', tags: ['strategy', 'technical'] },
-                        { text: 'Curated historical email datasets and enhanced pipelines to enable AI Customer Agent (AVA), reducing manual meter read inquiries.', tags: ['technical', 'business'] },
-                        { text: 'Reduced customer complaints by 30% through GenAI root-cause tooling and Salesforce-to-BigQuery pipelines.', tags: ['business', 'technical'] },
-                        { text: 'Automated NPS triggers, increasing survey coverage from 20% to 75% (150K additional surveys annually).', tags: ['business', 'technical'] },
-                        { text: 'Accelerated executive reporting cycles by 50% and improved data availability by 40% through centralized data assets.', tags: ['technical', 'business'] }
+                        { text: 'Architected modular "LEGO-block" service architecture for core Customer, Orders, and Contracts APIs.', tags: ['strategy', 'technical'] },
+                        { text: 'Launched a plug-and-play internal data marketplace empowering 40+ engineering teams.', tags: ['strategy', 'technical'] },
+                        { text: 'Enabled AI customer agent (AVA) via curated historical email datasets and enhanced streaming pipelines.', tags: ['technical'] },
+                        { text: 'Reduced customer complaints by 30% through Salesforce-to-BigQuery automated pipelines.', tags: ['business', 'technical'] },
+                        { text: 'Delivered top-line CLV uplift of 5% by enabling lifecycle data assets.', tags: ['business', 'strategy'] }
                     ]
                 },
                 {
                     id: 'lovecrafts',
                     company: 'LoveCrafts',
-                    title: 'Product Manager (Search & Discovery)',
+                    title: 'Product Manager',
                     period: 'May 2022 – Oct 2022',
                     location: 'London, UK',
-                    summary: 'Managed high-stakes website re-platforming and marketplace optimization.',
+                    summary: 'Managed high-stakes website re-platforming and search optimization.',
                     achievements: [
-                        { text: 'Re-platformed Search, Category, and Library features with zero negative impact on SEO or conversion.', tags: ['technical'] },
-                        { text: 'Launched Algolia Search MVP, increasing click-through rate of search results by 15%.', tags: ['business', 'technical'] },
-                        { text: 'Prioritized high-margin (CM2) products via sort algorithms, increasing weekly average CM2% by 10%.', tags: ['business', 'strategy'] }
+                        { text: 'Re-platformed search/category infrastructure with zero negative impact on SEO or conversion.', tags: ['technical'] },
+                        { text: 'Launched Algolia Search MVP, increasing click-through rate by 15%.', tags: ['business', 'technical'] },
+                        { text: 'Increased weekly average CM2% by 10% via margin-optimized sorting algorithms.', tags: ['business', 'strategy'] }
                     ]
                 },
                 {
-                    id: 'booth',
-                    company: 'UChicago Booth',
-                    title: 'Assistant Director, Digital PM',
+                    id: 'uchicago',
+                    company: 'U of Chicago Booth',
+                    title: 'Assistant Director',
                     period: 'June 2021 – Feb 2022',
                     location: 'Chicago, IL',
-                    summary: 'Led technical phases of marketing predictive modeling and Hadoop data warehousing.',
+                    summary: 'Led predictive analytics platform and Hadoop data warehousing phases.',
                     achievements: [
-                        { text: 'Scaled marketing spend predictive targeting platform from single-region MVP to global coverage.', tags: ['strategy', 'technical'] },
-                        { text: 'Led delivery of Booth\'s first Hadoop data warehouse, ensuring on-time and in-scope delivery.', tags: ['technical'] },
-                        { text: 'Led the auditing and analytics of large data sets for MBA ranking submissions to retain top 5 global status.', tags: ['business', 'technical'] }
+                        { text: 'Scaled marketing predictive solution from single-region MVP to global platform.', tags: ['strategy', 'technical'] },
+                        { text: 'Ensured compliance for top 5 MBA ranking submissions via rigorous data auditing.', tags: ['technical', 'business'] }
                     ]
                 },
                 {
@@ -180,14 +347,52 @@
                     title: 'Entrepreneur Lead',
                     period: 'May 2020 – Sept 2020',
                     location: 'Ann Arbor, MI',
-                    summary: 'Led discovery and business modeling for academic R&D simulation software.',
+                    summary: 'Led discovery and business modeling for R&D simulation software.',
                     achievements: [
-                        { text: 'Conducted 130+ customer discovery interviews using Lean Startup methodology to reach product-market fit.', tags: ['strategy'] },
-                        { text: 'Identified client pain points and sold the first pilot contract to an enterprise client.', tags: ['business'] }
+                        { text: 'Conducted 130+ customer interviews using Lean Startup methodology to reach PMF.', tags: ['strategy'] },
+                        { text: 'Secured first pilot contract and generated 10+ enterprise demo opportunities.', tags: ['business'] }
                     ]
                 }
             ]
         };
+
+        // --- UI RENDERERS ---
+
+        let toolkitExpanded = false;
+
+        function renderToolkit() {
+            const grid = document.getElementById('toolkitGrid');
+            grid.innerHTML = resumeData.toolkit.map(cat => `
+                <div>
+                    <h4 class="tool-category-header">
+                        <span>${cat.icon}</span>
+                        ${cat.category}
+                    </h4>
+                    <div class="flex flex-wrap">
+                        ${cat.tools.map(tool => `
+                            <div class="tool-pill">${tool}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleToolkit() {
+            toolkitExpanded = !toolkitExpanded;
+            const wrapper = document.getElementById('toolkitWrapper');
+            const btn = document.getElementById('toggleToolkitBtn');
+            
+            if (toolkitExpanded) {
+                wrapper.classList.remove('toolkit-collapsed');
+                wrapper.classList.add('toolkit-expanded');
+                btn.innerText = 'Show less tools';
+            } else {
+                wrapper.classList.add('toolkit-collapsed');
+                wrapper.classList.remove('toolkit-expanded');
+                btn.innerText = 'Show all 25+ tools';
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
 
         function initCharts() {
             new Chart(document.getElementById('competencyChart'), {
@@ -205,76 +410,84 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { display: false }, grid: { color: '#EBEBEB' }, pointLabels: { font: { family: 'Inter', weight: 600, size: 10 } } } },
+                    scales: { 
+                        r: { 
+                            suggestedMin: 0, 
+                            suggestedMax: 10, 
+                            ticks: { display: false }, 
+                            grid: { color: '#EBEBEB' }, 
+                            pointLabels: { font: { family: 'Inter', weight: 600, size: 10 } } 
+                        } 
+                    },
                     plugins: { legend: { display: false } }
                 }
             });
-        }
-
-        function renderToolkit() {
-            document.getElementById('toolkitGrid').innerHTML = resumeData.toolkit.map(cat => `
-                <div>
-                    <h4 class="font-bold text-sm mb-2">${cat.icon} ${cat.category}</h4>
-                    <div class="flex flex-wrap">${cat.tools.map(t => `<div class="tool-pill">${t}</div>`).join('')}</div>
-                </div>
-            `).join('');
-        }
-
-        function toggleToolkit() {
-            const w = document.getElementById('toolkitWrapper');
-            const b = document.getElementById('toggleToolkitBtn');
-            if(w.classList.contains('toolkit-collapsed')){
-                w.classList.replace('toolkit-collapsed', 'toolkit-expanded');
-                b.innerText = 'Show less';
-            } else {
-                w.classList.replace('toolkit-expanded', 'toolkit-collapsed');
-                b.innerText = 'Show all tools';
-            }
         }
 
         let currentFilter = 'all';
         let activeRoleId = 'ovo';
 
         function renderRoleList() {
-            document.getElementById('roleList').innerHTML = resumeData.roles.map(role => `
+            const list = document.getElementById('roleList');
+            list.innerHTML = resumeData.roles.map(role => `
                 <div onclick="selectRole('${role.id}')" class="role-card ${role.id === activeRoleId ? 'active' : ''}">
                     <div class="flex justify-between items-start mb-1">
                         <h4 class="font-bold text-sm uppercase tracking-tight">${role.company}</h4>
                         <span class="text-[10px] text-[#717171] font-bold">${role.period.split(' –')[0]}</span>
                     </div>
                     <p class="text-xs text-[#717171] font-semibold">${role.title}</p>
-                    <p class="text-[11px] mt-2 border-t pt-2">${role.summary}</p>
+                    <p class="text-[11px] text-[#717171] mt-3 leading-relaxed line-clamp-2 border-t border-[#EBEBEB] pt-2">
+                        ${role.summary}
+                    </p>
                 </div>
             `).join('');
         }
 
         function renderDetailView() {
             const role = resumeData.roles.find(r => r.id === activeRoleId);
+            if (!role) return;
             const filtered = role.achievements.filter(a => currentFilter === 'all' || a.tags.includes(currentFilter));
             document.getElementById('detailView').innerHTML = `
-                <h3 class="text-3xl font-extrabold tracking-tighter">${role.company}</h3>
-                <p class="text-lg text-[#717171] mb-6">${role.title}</p>
-                <div class="bg-[#F7F7F7] p-6 rounded-xl mb-6"><p>"${role.summary}"</p></div>
-                <ul class="space-y-4">
-                    ${filtered.map(a => `
-                        <li class="flex gap-4">
-                            <div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div>
-                            <p>${a.text.replace(/\b(\d+%)|\b(?<!top\s)(\d+(?:\+|K)?)\b/g, '<span class="font-bold text-[#FF385C]">$1$2</span>')}</p>
-                        </li>
-                    `).join('')}
-                </ul>
+                <div class="space-y-6">
+                    <div class="pb-6 border-b border-[#EBEBEB]">
+                        <h3 class="text-3xl font-extrabold tracking-tighter">${role.company}</h3>
+                        <p class="text-lg text-[#717171] font-medium">${role.title}</p>
+                        <p class="text-sm text-[#717171] mt-1">${role.period} · ${role.location}</p>
+                    </div>
+                    <div class="bg-[#F7F7F7] p-6 rounded-xl border border-[#EBEBEB]">
+                        <p class="text-[#222222] leading-relaxed">"${role.summary}"</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#717171] mb-4">Key Impact</h4>
+                        <ul class="space-y-6">
+                            ${filtered.map(a => `
+                                <li class="flex gap-4">
+                                    <div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div>
+                                    <p class="text-[#222222] leading-relaxed">
+                                        ${a.text.replace(/\b(\d+%)|\b(?<!top\s)(\d+(?:\+|K)?)\b/g, '<span class="font-bold text-[#FF385C]">$1$2</span>')}
+                                    </p>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
             `;
         }
 
         function selectRole(id) { activeRoleId = id; renderRoleList(); renderDetailView(); }
-        function filterExperience(t) { 
-            currentFilter = t; 
-            document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active')); 
-            document.getElementById('btn-'+t).classList.add('active'); 
-            renderDetailView(); 
+        function filterExperience(type) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`btn-${type}`).classList.add('active');
+            renderDetailView();
         }
 
-        window.onload = () => { initCharts(); renderToolkit(); renderRoleList(); selectRole('ovo'); };
+        window.onload = () => {
+            initCharts();
+            renderToolkit();
+            renderRoleList();
+            selectRole('ovo');
+        };
     </script>
 </body>
 </html>
