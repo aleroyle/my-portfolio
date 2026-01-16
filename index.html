@@ -53,7 +53,7 @@
         </section>
         
         <section class="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-[#EBEBEB] py-12">
-            <div><p class="text-3xl font-extrabold tracking-tighter">60+</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p></div>
+            <div><p class="text-3xl font-extrabold tracking-tighter">40+</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">30%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Complaint Reduction</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">40%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Faster Shipping</p></div>
             <div><p class="text-3xl font-extrabold tracking-tighter">5%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Top-line CLV Uplift</p></div>
@@ -118,11 +118,6 @@
     <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12 px-12 text-xs text-[#717171]">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <p>© 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>
-            <div class="flex gap-6">
-                <span class="font-semibold text-[#222222]">English (Fluent)</span>
-                <span class="font-semibold text-[#222222]">Mandarin (Native)</span>
-                <span class="font-semibold text-[#222222]">Italian (Intermediate)</span>
-            </div>
         </div>
     </footer>
 
@@ -143,9 +138,9 @@
                     title: 'Senior Product Manager (Data & Platform)',
                     period: 'Jan 2023 – Present',
                     location: 'London, UK',
-                    summary: 'Leading internal platform teams to build API-first and data-product foundations for 60+ engineering teams.',
+                    summary: 'Leading internal platform teams to build API-first and data-product foundations for 40+ engineering teams.',
                     achievements: [
-                        { text: 'Architected modular "LEGO-block" service layer for Customer, Orders, and Contracts APIs, enabling 60+ teams to ship 40% faster.', tags: ['strategy', 'technical'] },
+                        { text: 'Architected modular "LEGO-block" service layer for Customer, Orders, and Contracts APIs, enabling 40+ teams to ship 40% faster.', tags: ['strategy', 'technical'] },
                         { text: 'Launched an internal data marketplace with automated governance, enabling owners to publish high-quality, trusted data products.', tags: ['strategy', 'technical'] },
                         { text: 'Curated historical email datasets and enhanced pipelines to enable AI Customer Agent (AVA), reducing manual meter read inquiries.', tags: ['technical', 'business'] },
                         { text: 'Reduced customer complaints by 30% through GenAI root-cause tooling and Salesforce-to-BigQuery pipelines.', tags: ['business', 'technical'] },
@@ -176,7 +171,7 @@
                     achievements: [
                         { text: 'Scaled marketing spend predictive targeting platform from single-region MVP to global coverage.', tags: ['strategy', 'technical'] },
                         { text: 'Led delivery of Booth\'s first Hadoop data warehouse, ensuring on-time and in-scope delivery.', tags: ['technical'] },
-                        { text: 'Led the auditing and analytics of large data sets for MBA ranking submissions to retain top-5 global status.', tags: ['business', 'technical'] }
+                        { text: 'Led the auditing and analytics of large data sets for MBA ranking submissions to retain top 5 global status.', tags: ['business', 'technical'] }
                     ]
                 },
                 {
@@ -264,7 +259,7 @@
                     ${filtered.map(a => `
                         <li class="flex gap-4">
                             <div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div>
-                            <p>${a.text.replace(/(\d+%)|(\d+)/g, '<span class="font-bold text-[#FF385C]">$1$2</span>')}</p>
+                            <p>${a.text.replace(/\b(\d+%)|\b(?<!top\s)(\d+(?:\+|K)?)\b/g, '<span class="font-bold text-[#FF385C]">$1$2</span>')}</p>
                         </li>
                     `).join('')}
                 </ul>
