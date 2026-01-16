@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28520\viewh17520\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Alison Wang | Data Product Lead</title>\
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>\
+    <script src="[https://cdn.jsdelivr.net/npm/chart.js](https://cdn.jsdelivr.net/npm/chart.js)"></script>\
+    <style>\
+        @import url('[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)');\
+        :root \{\
+            --airbnb-rausch: #FF385C;\
+            --airbnb-dark: #222222;\
+            --airbnb-secondary: #717171;\
+            --airbnb-border: #DDDDDD;\
+            --airbnb-bg-light: #F7F7F7;\
+        \}\
+        body \{ font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: var(--airbnb-dark); \}\
+        .chart-container \{ position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 350px; \}\
+        .role-card \{ transition: box-shadow 0.2s ease, transform 0.1s ease; cursor: pointer; border: 1px solid var(--airbnb-border); border-radius: 12px; padding: 16px; \}\
+        .role-card:hover \{ box-shadow: 0 6px 16px rgba(0,0,0,0.12); \}\
+        .role-card.active \{ border: 2px solid var(--airbnb-dark); background-color: var(--airbnb-bg-light); \}\
+        .filter-tab \{ padding: 12px 16px; color: var(--airbnb-secondary); font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; \}\
+        .filter-tab.active \{ color: var(--airbnb-dark); border-bottom: 2px solid var(--airbnb-dark); \}\
+        .tool-pill \{ display: inline-flex; align-items: center; padding: 6px 12px; background-color: white; border: 1px solid var(--airbnb-border); border-radius: 8px; font-size: 13px; color: var(--airbnb-dark); margin: 0 4px 8px 0; \}\
+        .toolkit-collapsed \{ max-height: 420px; overflow: hidden; position: relative; \}\
+        .toolkit-collapsed::after \{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(transparent, white); pointer-events: none; \}\
+        .toolkit-expanded \{ max-height: none; \}\
+        .toolkit-expanded::after \{ display: none; \}\
+    </style>\
+</head>\
+<body class="antialiased">\
+    <header class="sticky top-0 z-50 bg-white border-b border-[#EBEBEB] px-6 py-4 md:px-12 flex justify-between items-center">\
+        <div class="flex items-center gap-2">\
+            <div class="w-8 h-8 rounded-full bg-[#FF385C] flex items-center justify-center"><span class="text-white font-bold text-lg">A</span></div>\
+            <span class="text-[#FF385C] font-bold text-xl tracking-tighter">Alison Wang</span>\
+        </div>\
+        <div class="hidden md:flex items-center border border-[#DDDDDD] rounded-full px-4 py-2 shadow-sm hover:shadow-md transition cursor-pointer gap-4 text-sm font-medium">\
+            <span>alisonwg.royle@gmail.com</span>\
+            <div class="w-7 h-7 bg-[#717171] rounded-full flex items-center justify-center"><span class="text-white text-[10px]">AW</span></div>\
+        </div>\
+    </header>\
+    <main class="max-w-7xl mx-auto px-6 md:px-12 py-10 space-y-16">\
+        <section class="max-w-3xl">\
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#222222]">Data Product Lead scaling high-impact platforms.</h1>\
+            <p class="mt-6 text-xl text-[#717171] leading-relaxed">Strategic leader with <span class="text-[#222222] font-semibold">8+ years</span> of experience transforming legacy architectures into modular service ecosystems for <span class="text-[#222222] font-semibold">60+ global teams</span>.</p>\
+        </section>\
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-8 border-y border-[#EBEBEB] py-12">\
+            <div><p class="text-3xl font-extrabold tracking-tighter">60+</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Teams Empowered</p></div>\
+            <div><p class="text-3xl font-extrabold tracking-tighter">30%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Complaint Reduction</p></div>\
+            <div><p class="text-3xl font-extrabold tracking-tighter">40%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Faster Shipping</p></div>\
+            <div><p class="text-3xl font-extrabold tracking-tighter">5%</p><p class="text-xs text-[#717171] uppercase font-bold mt-1">Top-line CLV Uplift</p></div>\
+        </section>\
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12">\
+            <div class="space-y-4">\
+                <h3 class="text-xl font-bold">Expertise & Knowledge</h3>\
+                <div class="chart-container"><canvas id="competencyChart"></canvas></div>\
+            </div>\
+            <div class="space-y-4">\
+                <h3 class="text-xl font-bold">Technical Toolkit</h3>\
+                <div id="toolkitWrapper" class="toolkit-collapsed"><div id="toolkitGrid" class="space-y-8"></div></div>\
+                <button id="toggleToolkitBtn" onclick="toggleToolkit()" class="w-full py-3 border border-black rounded-lg font-bold">Show all tools</button>\
+            </div>\
+        </section>\
+        <section class="space-y-8 pb-20">\
+            <div class="flex border-b border-[#EBEBEB]"><button onclick="filterExperience('all')" id="btn-all" class="filter-tab active">All</button><button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab">Strategy</button><button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab">Technical</button><button onclick="filterExperience('business')" id="btn-business" class="filter-tab">Business</button></div>\
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">\
+                <div id="roleList" class="lg:col-span-1 space-y-4 max-h-[600px] overflow-y-auto pr-2"></div>\
+                <div id="detailView" class="lg:col-span-2 bg-white rounded-2xl border border-[#DDDDDD] p-8 shadow-sm"></div>\
+            </div>\
+        </section>\
+    </main>\
+    <footer class="bg-[#F7F7F7] border-t border-[#EBEBEB] py-12 px-12 text-xs text-[#717171]">\
+        <p>\'a9 2026 Alison Wang. Designed with Airbnb Style Guide principles.</p>\
+    </footer>\
+    <script>\
+        const resumeData = \{\
+            competencies: \{ labels: ['Product Mgmt', 'Data Warehousing', 'ML Pipelines', 'Platform APIs', 'Automation', 'UX Research', 'Lean Startup', 'Agile'], data: [9.5, 9, 9, 9.5, 8.5, 8, 9, 9] \},\
+            toolkit: [\
+                \{ category: 'Data Platform', icon: '\uc0\u55357 \u56522 ', tools: ['BigQuery', 'Datahub', 'Monte Carlo', 'Kafka'] \},\
+                \{ category: 'Product Management', icon: '\uc0\u55357 \u56523 ', tools: ['Amplitude', 'Mixpanel', 'GA', 'Workfront', 'Jira', 'Confluence', 'Trello', 'Airtable'] \},\
+                \{ category: 'E-commerce', icon: '\uc0\u55357 \u57042 ', tools: ['Magento', 'CommerceTool', 'Algolia', 'Vue Storefront'] \},\
+                \{ category: 'UX Design', icon: '\uc0\u55356 \u57256 ', tools: ['Figma', 'Sketch', 'Adobe XD', 'Invision', 'Miro'] \}\
+            ],\
+            roles: [\
+                \{ id: 'ovo', company: 'OVO Energy', title: 'Senior Product Manager', period: 'Jan 2023 \'96 Present', location: 'London, UK', summary: 'Leading internal platform teams to build API-first and data-product foundations.', achievements: [\{ text: 'Architected modular "LEGO-block" service architecture for core APIs.', tags: ['strategy', 'technical'] \}, \{ text: 'Launched a plug-and-play internal data marketplace.', tags: ['strategy', 'technical'] \}, \{ text: 'Reduced customer complaints by 30%.', tags: ['business', 'technical'] \}] \},\
+                \{ id: 'lovecrafts', company: 'LoveCrafts', title: 'Product Manager', period: 'May 2022 \'96 Oct 2022', location: 'London, UK', summary: 'Managed website re-platforming and search optimization.', achievements: [\{ text: 'Launched Algolia Search MVP, increasing CTR by 15%.', tags: ['business', 'technical'] \}, \{ text: 'Increased weekly average CM2% by 10%.', tags: ['business', 'strategy'] \}] \}\
+            ]\
+        \};\
+        function initCharts() \{\
+            new Chart(document.getElementById('competencyChart'), \{ type: 'radar', data: \{ labels: resumeData.competencies.labels, datasets: [\{ data: resumeData.competencies.data, backgroundColor: 'rgba(255, 56, 92, 0.1)', borderColor: '#FF385C', borderWidth: 2 \}] \}, options: \{ responsive: true, maintainAspectRatio: false, scales: \{ r: \{ suggestedMin: 0, suggestedMax: 10, ticks: \{ display: false \} \} \}, plugins: \{ legend: \{ display: false \} \} \} \});\
+        \}\
+        function renderToolkit() \{\
+            document.getElementById('toolkitGrid').innerHTML = resumeData.toolkit.map(cat => `<div><h4 class="font-bold text-sm mb-2">$\{cat.icon\} $\{cat.category\}</h4><div class="flex flex-wrap">$\{cat.tools.map(t => `<div class="tool-pill">$\{t\}</div>`).join('')\}</div></div>`).join('');\
+        \}\
+        function toggleToolkit() \{ const w = document.getElementById('toolkitWrapper'); const b = document.getElementById('toggleToolkitBtn'); if(w.classList.contains('toolkit-collapsed'))\{ w.classList.replace('toolkit-collapsed', 'toolkit-expanded'); b.innerText = 'Show less'; \} else \{ w.classList.replace('toolkit-expanded', 'toolkit-collapsed'); b.innerText = 'Show all tools'; \} \}\
+        let currentFilter = 'all'; let activeRoleId = 'ovo';\
+        function renderRoleList() \{\
+            document.getElementById('roleList').innerHTML = resumeData.roles.map(role => `<div onclick="selectRole('$\{role.id\}')" class="role-card $\{role.id === activeRoleId ? 'active' : ''\}"><h4 class="font-bold text-sm">$\{role.company\}</h4><p class="text-xs text-[#717171]">$\{role.title\}</p><p class="text-[11px] mt-2 border-t pt-2">$\{role.summary\}</p></div>`).join('');\
+        \}\
+        function renderDetailView() \{\
+            const role = resumeData.roles.find(r => r.id === activeRoleId);\
+            const filtered = role.achievements.filter(a => currentFilter === 'all' || a.tags.includes(currentFilter));\
+            document.getElementById('detailView').innerHTML = `<h3 class="text-3xl font-extrabold tracking-tighter">$\{role.company\}</h3><p class="text-lg text-[#717171] mb-6">$\{role.title\}</p><div class="bg-[#F7F7F7] p-6 rounded-xl mb-6"><p>"$\{role.summary\}"</p></div><ul class="space-y-4">$\{filtered.map(a => `<li class="flex gap-4"><div class="w-2 h-2 rounded-full bg-[#FF385C] mt-2 flex-shrink-0"></div><p>$\{a.text\}</p></li>`).join('')\}</ul>`;\
+        \}\
+        function selectRole(id) \{ activeRoleId = id; renderRoleList(); renderDetailView(); \}\
+        function filterExperience(t) \{ currentFilter = t; document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active')); document.getElementById('btn-'+t).classList.add('active'); renderDetailView(); \}\
+        window.onload = () => \{ initCharts(); renderToolkit(); renderRoleList(); selectRole('ovo'); \};\
+    </script>\
+</body>\
+</html>\
+}
