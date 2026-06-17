@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alison Wang | Lead PM, Data Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        :root {
+            --charcoal: #1a1a1a;
+            --gold: #D97706;
+            --gold-light: #FEF3C7;
+            --secondary: #6b7280;
+            --border: #e5e7eb;
+            --bg: #fafafa;
+            --white: #ffffff;
+        }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg); color: var(--charcoal); }
+        .gold { color: var(--gold); }
+        .prose-col { max-width: 680px; }
+
+        /* Timeline */
+        .timeline-track { position: relative; display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 0; }
+        .timeline-track::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--border); }
+        .timeline-stop { display: flex; flex-direction: column; align-items: center; position: relative; min-width: 120px; }
+        .timeline-skyline { width: 100px; height: 60px; opacity: 0.7; transition: opacity 0.2s; }
+        .timeline-stop:hover .timeline-skyline { opacity: 1; }
+        .timeline-stop:last-child .timeline-skyline { opacity: 1; }
+        .timeline-marker { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); position: relative; z-index: 1; margin: 8px 0 -5px; }
+        .timeline-stop:last-child .timeline-marker { box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.2); }
+
+        /* Known-for cards */
+        .known-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: box-shadow 0.2s; }
+        .known-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+        /* Role cards */
+        .role-item { border-bottom: 1px solid var(--border); padding: 20px 0; cursor: pointer; transition: background 0.15s; }
+        .role-item:hover { background: var(--white); margin: 0 -16px; padding: 20px 16px; border-radius: 8px; border-bottom-color: transparent; }
+        .role-item .achievements { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .role-item.expanded .achievements { max-height: 2000px; }
+        .role-item .expand-icon { transition: transform 0.2s; }
+        .role-item.expanded .expand-icon { transform: rotate(180deg); }
+
+        /* Filter tabs — Notion style */
+        .filter-tab { padding: 8px 0; margin-right: 24px; color: var(--secondary); font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.15s; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; }
+        .filter-tab.active { color: var(--charcoal); border-bottom-color: var(--charcoal); }
+        .filter-tab:hover { color: var(--charcoal); }
+
+        /* Beliefs */
+        .belief-item { padding: 12px 0 12px 20px; border-left: 3px solid var(--gold); font-size: 15px; line-height: 1.6; }
+
+        /* Facts strip */
+        .fact-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; font-size: 13px; white-space: nowrap; }
+
+        /* Toolkit */
+        .tool-tag { font-size: 13px; color: var(--secondary); }
+        .tool-tag::after { content: ' · '; color: var(--border); }
+        .tool-tag:last-child::after { content: ''; }
+
+        /* Scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Education */
+        .edu-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+
+        /* Nav link */
+        .nav-link { font-size: 13px; color: var(--secondary); font-weight: 500; text-decoration: none; transition: color 0.15s; }
+        .nav-link:hover { color: var(--charcoal); }
+
+        /* Download button */
+        .btn-download { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--charcoal); background: var(--white); transition: all 0.15s; text-decoration: none; }
+        .btn-download:hover { border-color: var(--charcoal); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[#e5e7eb] px-6 py-3 md:px-12">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <span class="font-bold text-sm tracking-tight">Alison Wang</span>
+            <div class="flex items-center gap-6">
+                <a href="#story" class="nav-link hidden md:inline">Story</a>
+                <a href="#known-for" class="nav-link hidden md:inline">Strengths</a>
+                <a href="#experience" class="nav-link hidden md:inline">Experience</a>
+                <a href="#believes" class="nav-link hidden md:inline">Beliefs</a>
+                <a href="https://drive.google.com/uc?export=download&id=1POaqfh6aBGSRXMSdMmyIFHU6xR53IQCi" target="_blank" class="btn-download">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Resume
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 md:px-12">
+
+        <!-- Hero -->
+        <section class="pt-16 pb-12">
+            <p class="text-sm font-semibold gold uppercase tracking-widest mb-4">Lead Product Manager, Data Platform</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] max-w-3xl">I turn messy data estates into platforms teams trust and leadership invest in.</h1>
+            <p class="mt-6 text-lg text-[#6b7280] leading-relaxed prose-col">
+                Governance, discovery, cost optimisation, platform operating model, observability &mdash; I cover the full platform lifecycle. Hands-on from SQL deep-dives to c-suite strategy decks, no handoff required.
+            </p>
+        </section>
+
+        <!-- Stats -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-y border-[#e5e7eb]">
+            <div>
+                <p class="text-3xl font-extrabold tracking-tight gold">300+</p>
+                <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Platform Users</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tight gold">474K</p>
+                <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Tables Governed</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tight gold">20+</p>
+                <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Consuming Teams</p>
+            </div>
+            <div>
+                <p class="text-3xl font-extrabold tracking-tight gold">21</p>
+                <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Capabilities</p>
+            </div>
+        </section>
+
+        <!-- My Story -->
+        <section id="story" class="py-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-6">My Story</h2>
+            <div class="prose-col space-y-5 text-[15px] leading-relaxed text-[#374151]">
+                <p>People infrastructure in Shanghai. Product toolkit at Michigan. Technical depth in e-commerce and data warehousing.</p>
+                <p>At OVO, I started closest to the business &mdash; a forward-deployed PM in the customer care domain, shipping data products under data mesh principles and proving they could drive real value. From there I moved into core platform APIs, then took full ownership of the data platform: governance, discovery, cost optimisation, platform operating model, observability.</p>
+                <p>Every move was a zoom out &mdash; from one domain's data products, to the APIs everyone depends on, to the platform that underpins it all. Now I'm sole PM on a team of three, covering 21 capabilities and 20+ consuming teams.</p>
+                <p class="text-[#1a1a1a] font-medium">The thread through all of it: I build the trust and governance layers that let organisations make confident decisions.</p>
+            </div>
+        </section>
+
+        <!-- Career Journey Timeline -->
+        <section class="pb-16">
+            <div class="timeline-track">
+                <!-- Shanghai -->
+                <div class="timeline-stop">
+                    <div class="text-center mb-2">
+                        <p class="text-xs font-semibold">Shanghai</p>
+                        <p class="text-[10px] text-[#6b7280]">2013–2019</p>
+                        <p class="text-[10px] text-[#6b7280]">EF Education First</p>
+                    </div>
+                    <svg class="timeline-skyline" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Oriental Pearl Tower -->
+                        <rect x="28" y="8" width="3" height="52" rx="1" fill="#D97706" opacity="0.3"/>
+                        <circle cx="29.5" cy="18" r="5" fill="#D97706" opacity="0.25"/>
+                        <circle cx="29.5" cy="32" r="3.5" fill="#D97706" opacity="0.2"/>
+                        <!-- Pudong towers -->
+                        <rect x="40" y="15" width="6" height="45" rx="1" fill="#D97706" opacity="0.35"/>
+                        <rect x="48" y="10" width="5" height="50" rx="1" fill="#D97706" opacity="0.4"/>
+                        <rect x="55" y="20" width="5" height="40" rx="1" fill="#D97706" opacity="0.3"/>
+                        <!-- Shanghai Tower spire -->
+                        <rect x="62" y="5" width="4" height="55" rx="1" fill="#D97706" opacity="0.35"/>
+                        <!-- Shorter buildings -->
+                        <rect x="10" y="35" width="8" height="25" rx="1" fill="#D97706" opacity="0.2"/>
+                        <rect x="20" y="38" width="6" height="22" rx="1" fill="#D97706" opacity="0.15"/>
+                        <rect x="70" y="32" width="7" height="28" rx="1" fill="#D97706" opacity="0.2"/>
+                        <rect x="80" y="38" width="8" height="22" rx="1" fill="#D97706" opacity="0.15"/>
+                    </svg>
+                    <div class="timeline-marker"></div>
+                </div>
+                <!-- Ann Arbor -->
+                <div class="timeline-stop">
+                    <div class="text-center mb-2">
+                        <p class="text-xs font-semibold">Ann Arbor</p>
+                        <p class="text-[10px] text-[#6b7280]">2019–2020</p>
+                        <p class="text-[10px] text-[#6b7280]">Michigan · NSF</p>
+                    </div>
+                    <svg class="timeline-skyline" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Burton Tower -->
+                        <rect x="42" y="5" width="8" height="55" rx="1" fill="#D97706" opacity="0.35"/>
+                        <rect x="40" y="5" width="12" height="6" rx="1" fill="#D97706" opacity="0.3"/>
+                        <rect x="44" y="0" width="4" height="8" rx="0.5" fill="#D97706" opacity="0.4"/>
+                        <!-- Campus buildings -->
+                        <rect x="15" y="35" width="14" height="25" rx="1" fill="#D97706" opacity="0.2"/>
+                        <polygon points="15,35 22,28 29,35" fill="#D97706" opacity="0.2"/>
+                        <rect x="58" y="38" width="12" height="22" rx="1" fill="#D97706" opacity="0.2"/>
+                        <polygon points="58,38 64,30 70,38" fill="#D97706" opacity="0.2"/>
+                        <!-- Trees -->
+                        <circle cx="8" cy="48" r="6" fill="#D97706" opacity="0.12"/>
+                        <circle cx="82" cy="46" r="7" fill="#D97706" opacity="0.12"/>
+                        <circle cx="92" cy="50" r="5" fill="#D97706" opacity="0.1"/>
+                    </svg>
+                    <div class="timeline-marker"></div>
+                </div>
+                <!-- Chicago -->
+                <div class="timeline-stop">
+                    <div class="text-center mb-2">
+                        <p class="text-xs font-semibold">Chicago</p>
+                        <p class="text-[10px] text-[#6b7280]">2021–2022</p>
+                        <p class="text-[10px] text-[#6b7280]">UChicago Booth</p>
+                    </div>
+                    <svg class="timeline-skyline" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Willis/Sears Tower -->
+                        <rect x="25" y="5" width="10" height="55" rx="1" fill="#D97706" opacity="0.4"/>
+                        <rect x="28" y="0" width="4" height="8" rx="0.5" fill="#D97706" opacity="0.35"/>
+                        <!-- Hancock -->
+                        <polygon points="45,60 48,8 56,8 59,60" fill="#D97706" opacity="0.35"/>
+                        <!-- Trump/Wrigley -->
+                        <rect x="64" y="18" width="7" height="42" rx="1" fill="#D97706" opacity="0.3"/>
+                        <rect x="66" y="12" width="3" height="10" rx="0.5" fill="#D97706" opacity="0.25"/>
+                        <!-- Smaller buildings -->
+                        <rect x="8" y="32" width="8" height="28" rx="1" fill="#D97706" opacity="0.2"/>
+                        <rect x="18" y="28" width="5" height="32" rx="1" fill="#D97706" opacity="0.15"/>
+                        <rect x="75" y="30" width="8" height="30" rx="1" fill="#D97706" opacity="0.2"/>
+                        <rect x="86" y="38" width="7" height="22" rx="1" fill="#D97706" opacity="0.15"/>
+                    </svg>
+                    <div class="timeline-marker"></div>
+                </div>
+                <!-- London (2022–Present) -->
+                <div class="timeline-stop">
+                    <div class="text-center mb-2">
+                        <p class="text-xs font-semibold">London <span class="gold">· Present</span></p>
+                        <p class="text-[10px] text-[#6b7280]">2022–Present</p>
+                        <p class="text-[10px] text-[#6b7280]">LoveCrafts · OVO</p>
+                    </div>
+                    <svg class="timeline-skyline" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Big Ben / Elizabeth Tower -->
+                        <rect x="12" y="10" width="7" height="50" rx="1" fill="#D97706" opacity="0.5"/>
+                        <polygon points="12,10 15.5,2 19,10" fill="#D97706" opacity="0.45"/>
+                        <!-- The Shard -->
+                        <polygon points="38,60 42,0 46,60" fill="#D97706" opacity="0.55"/>
+                        <!-- Gherkin -->
+                        <ellipse cx="60" cy="35" rx="6" ry="22" fill="#D97706" opacity="0.45"/>
+                        <!-- Tower Bridge hint -->
+                        <rect x="76" y="28" width="5" height="32" rx="1" fill="#D97706" opacity="0.4"/>
+                        <rect x="86" y="28" width="5" height="32" rx="1" fill="#D97706" opacity="0.4"/>
+                        <rect x="76" y="32" width="15" height="3" rx="0.5" fill="#D97706" opacity="0.35"/>
+                        <!-- Shorter buildings -->
+                        <rect x="25" y="38" width="8" height="22" rx="1" fill="#D97706" opacity="0.25"/>
+                        <rect x="50" y="42" width="6" height="18" rx="1" fill="#D97706" opacity="0.25"/>
+                        <rect x="68" y="40" width="5" height="20" rx="1" fill="#D97706" opacity="0.25"/>
+                    </svg>
+                    <div class="timeline-marker"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I'm Known For -->
+        <section id="known-for" class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-8">What I'm Known For</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="known-card">
+                    <p class="text-lg font-bold mb-2">Evidence-Based Strategy</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">I design the analytical frameworks that shape roadmap decisions &mdash; redundancy classification, discovery funnels, effort-value models. I don't trust anecdotes or surveys alone; I build behavioural analytics pipelines, write the SQL, and produce evidence packs that reframe where leadership invests.</p>
+                </div>
+                <div class="known-card">
+                    <p class="text-lg font-bold mb-2">Data Governance</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">I build governance as infrastructure, not policy documents. Auditable access grants via GitHub PRs, multi-region replication, taxonomy design &mdash; enforcement baked into the platform.</p>
+                </div>
+                <div class="known-card">
+                    <p class="text-lg font-bold mb-2">Cost &amp; Capacity</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">Cost optimisation isn't a one-off analysis &mdash; it's an operating model. I turn observability data into structured cost insights, designed a 5-category redundancy classification framework, and validated every recommendation before presenting it. Minimal headcount, maximum impact &mdash; leveraging deep platform expertise to generate outsized value.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-4">Experience</h2>
+            <div class="flex mb-6 border-b border-[#e5e7eb]">
+                <button onclick="filterExperience('all')" id="btn-all" class="filter-tab active">All</button>
+                <button onclick="filterExperience('strategy')" id="btn-strategy" class="filter-tab">Strategy</button>
+                <button onclick="filterExperience('technical')" id="btn-technical" class="filter-tab">Technical</button>
+                <button onclick="filterExperience('governance')" id="btn-governance" class="filter-tab">Governance</button>
+                <button onclick="filterExperience('business')" id="btn-business" class="filter-tab">Business</button>
+            </div>
+            <div id="roleList"></div>
+        </section>
+
+        <!-- Education -->
+        <section class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-8">Education</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="edu-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">University of Michigan</h4>
+                        <span class="text-xs text-[#6b7280] font-medium">2019–2020</span>
+                    </div>
+                    <p class="text-sm text-[#374151]">MA: Design and Technologies for Learning</p>
+                    <div class="flex gap-3 mt-2 text-xs text-[#6b7280]">
+                        <span>Ann Arbor, MI</span>
+                        <span class="font-bold gold">GPA 4.0/4.0</span>
+                    </div>
+                </div>
+                <div class="edu-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold">Shanghai International Studies University</h4>
+                        <span class="text-xs text-[#6b7280] font-medium">2009–2013</span>
+                    </div>
+                    <p class="text-sm text-[#374151]">BA: Italian Language and Literature</p>
+                    <div class="flex gap-3 mt-2 text-xs text-[#6b7280]">
+                        <span>Shanghai, China</span>
+                        <span class="font-bold gold">GPA 3.56/4.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick-Fire Facts -->
+        <section class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-6">Quick Facts</h2>
+            <div class="flex flex-wrap gap-3">
+                <div class="fact-chip">🌏 4 countries lived in</div>
+                <div class="fact-chip">🗣 English · 中文 · Italiano</div>
+                <div class="fact-chip">🎓 4.0 GPA, Michigan</div>
+                <div class="fact-chip">🧶 Crocheter, watercolourist, illustrator</div>
+                <div class="fact-chip">🧩 Systems thinker — people ops to data ops</div>
+            </div>
+        </section>
+
+        <!-- Things I Believe -->
+        <section id="believes" class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-8">Things I Believe</h2>
+            <div class="prose-col space-y-4">
+                <div class="belief-item">The best roadmap is the one shaped by evidence, not opinions.</div>
+                <div class="belief-item">The most impactful work is rarely assigned. Initiate or it won't happen.</div>
+                <div class="belief-item">Influence isn't about authority. It's about bringing better evidence than anyone else in the room.</div>
+                <div class="belief-item">The goal isn't to do more with less &mdash; it's to build the system that does more without you.</div>
+                <div class="belief-item">Governance is infrastructure, not bureaucracy.</div>
+            </div>
+        </section>
+
+        <!-- Toolkit -->
+        <section class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-8">Toolkit</h2>
+            <div id="toolkitGrid" class="space-y-5"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#e5e7eb] py-10 px-6 md:px-12">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-[#6b7280]">&copy; 2026 Alison Wang</p>
+            <div class="flex gap-6">
+                <a href="https://linkedin.com/in/alison-wang" target="_blank" class="nav-link">LinkedIn</a>
+                <a href="https://github.com/aleroyle" target="_blank" class="nav-link">GitHub</a>
+                <a href="mailto:alison.wang@ovo.com" class="nav-link">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const resumeData = {
+            toolkit: [
+                { category: 'Data Platform', tools: ['BigQuery', 'DataHub', 'Dataform', 'Analytics Hub', 'Policy Tags', 'Looker', 'LookML'] },
+                { category: 'Analysis & Notebooks', tools: ['SQL', 'Python', 'Jupyter', 'Looker Studio'] },
+                { category: 'GCP Infrastructure', tools: ['Cloud SQL', 'Datastream', 'Pub/Sub', 'Terraform', 'GCS'] },
+                { category: 'Product Management', tools: ['Jira', 'Confluence', 'Miro', 'Google Slides', 'Airtable'] },
+                { category: 'AI & Automation', tools: ['Claude Code', 'LLM Evaluation', 'Agentic Workflows'] },
+                { category: 'E-commerce (prior)', tools: ['Algolia', 'Magento', 'CommerceTools', 'Vue Storefront'] },
+                { category: 'Design & UX', tools: ['Figma', 'Adobe XD', 'Miro'] }
+            ],
+            roles: [
+                {
+                    id: 'ovo-data',
+                    company: 'OVO Energy',
+                    title: 'Lead Product Manager, Data Platform',
+                    period: '2024 – Present',
+                    location: 'London, UK',
+                    expanded: true,
+                    achievements: [
+                        { text: 'Defined the multi-year platform strategy for senior execs (VP Product & AI, Director of Data & AI) across four pillars: self-serve marketplace, trust & governance, observability & cost, and platform foundation.', tags: ['strategy'] },
+                        { text: 'Shipped column-level security across 3 EU regions — the governance foundation for safe AI consumption of sensitive data. Driving v2 with time-based access controls and data masking.', tags: ['governance', 'technical'] },
+                        { text: 'Led platform-wide cost analysis identifying over 50% of shared compute as preventable. Designed the operating model to remediate at scale with minimal headcount.', tags: ['technical', 'strategy'] },
+                        { text: 'Authored the investment case to evolve the platform from manual operations to an agentic data engine — autonomous agents across all four pillars that scale with zero marginal headcount, shifting the financial model from recurring OPEX to depreciable CAPEX.', tags: ['strategy', 'business'] },
+                        { text: 'Established data trust and quality layers — data product publishing, nomination programme, behavioural analytics — positioning the platform as the governed foundation for AI-first transformation.', tags: ['governance', 'strategy'] }
+                    ]
+                },
+                {
+                    id: 'ovo-core',
+                    company: 'OVO Energy',
+                    title: 'Senior Product Manager, Core Platform',
+                    period: 'Jan 2023 – 2024',
+                    location: 'London, UK',
+                    expanded: false,
+                    achievements: [
+                        { text: 'Architected modular "LEGO-block" service layer for Customer, Orders, and Contracts APIs, enabling 40+ teams to ship 40% faster.', tags: ['strategy', 'technical'] },
+                        { text: 'Curated historical email datasets and enhanced pipelines to enable AI Customer Agent (AVA), reducing manual meter read inquiries.', tags: ['technical', 'business'] },
+                        { text: 'Reduced customer complaints by 30% through GenAI root-cause tooling and Salesforce-to-BigQuery pipelines.', tags: ['business', 'technical'] },
+                        { text: 'Automated NPS triggers, increasing survey coverage from 20% to 75% (150K additional surveys annually).', tags: ['business', 'technical'] },
+                        { text: 'Accelerated executive reporting cycles by 50% and improved data availability by 40% through centralised data assets.', tags: ['technical', 'business'] }
+                    ]
+                },
+                {
+                    id: 'lovecrafts',
+                    company: 'LoveCrafts',
+                    title: 'Product Manager, Search & Discovery',
+                    period: 'May 2022 – Oct 2022',
+                    location: 'London, UK',
+                    expanded: false,
+                    achievements: [
+                        { text: 'Re-platformed Search, Category, and Library features with zero negative impact on SEO or conversion.', tags: ['technical'] },
+                        { text: 'Launched Algolia Search MVP, increasing click-through rate of search results by 15%.', tags: ['business', 'technical'] },
+                        { text: 'Prioritised high-margin (CM2) products via sort algorithms, increasing weekly average CM2% by 10%.', tags: ['business', 'strategy'] }
+                    ]
+                },
+                {
+                    id: 'booth',
+                    company: 'UChicago Booth',
+                    title: 'Assistant Director, Digital PM',
+                    period: 'June 2021 – Feb 2022',
+                    location: 'Chicago, IL',
+                    expanded: false,
+                    achievements: [
+                        { text: 'Scaled marketing spend predictive targeting platform from single-region MVP to global coverage.', tags: ['strategy', 'technical'] },
+                        { text: 'Led delivery of Booth\'s first Hadoop data warehouse, ensuring on-time and in-scope delivery.', tags: ['technical'] },
+                        { text: 'Led the auditing and analytics of large data sets for MBA ranking submissions to retain top 5 global status.', tags: ['business', 'technical'] }
+                    ]
+                },
+                {
+                    id: 'nsf',
+                    company: 'NSF i-Corps',
+                    title: 'Entrepreneur Lead',
+                    period: 'May 2020 – Sept 2020',
+                    location: 'Ann Arbor, MI',
+                    expanded: false,
+                    achievements: [
+                        { text: 'Conducted 130+ customer discovery interviews using Lean Startup methodology to reach product-market fit.', tags: ['strategy'] },
+                        { text: 'Identified client pain points and sold the first pilot contract to an enterprise client.', tags: ['business'] }
+                    ]
+                },
+                {
+                    id: 'ef',
+                    company: 'EF Education First',
+                    title: 'HR Manager',
+                    period: '2013 – 2019',
+                    location: 'Shanghai, China',
+                    expanded: false,
+                    achievements: [
+                        { text: 'Managed HR operations across a global education organisation, building systems for recruitment, development, and performance at scale.', tags: ['business', 'strategy'] },
+                        { text: 'Designed and delivered cross-cultural training and onboarding programmes for international teams.', tags: ['business'] },
+                        { text: 'Developed organisational governance processes — access controls, compliance workflows, and audit trails — skills that directly transferred to data governance work.', tags: ['governance', 'business'] }
+                    ]
+                }
+            ]
+        };
+
+        let currentFilter = 'all';
+
+        function renderToolkit() {
+            document.getElementById('toolkitGrid').innerHTML = resumeData.toolkit.map(cat => `
+                <div>
+                    <p class="text-xs font-semibold text-[#6b7280] uppercase tracking-wider mb-2">${cat.category}</p>
+                    <p>${cat.tools.map(t => `<span class="tool-tag">${t}</span>`).join('')}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderRoles() {
+            const list = document.getElementById('roleList');
+            list.innerHTML = resumeData.roles.map(role => {
+                const filtered = role.achievements.filter(a => currentFilter === 'all' || a.tags.includes(currentFilter));
+                if (filtered.length === 0 && currentFilter !== 'all') return '';
+                return `
+                <div class="role-item ${role.expanded ? 'expanded' : ''}" onclick="toggleRole('${role.id}')">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold">${role.company} <span class="font-normal text-[#6b7280]">· ${role.location}</span></p>
+                            <p class="text-sm text-[#6b7280]">${role.title} <span class="text-xs">· ${role.period}</span></p>
+                        </div>
+                        <svg class="expand-icon w-5 h-5 text-[#6b7280] flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                    <div class="achievements">
+                        <ul class="mt-4 space-y-3">
+                            ${filtered.map(a => `
+                                <li class="flex gap-3 text-sm leading-relaxed">
+                                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] mt-2 flex-shrink-0"></span>
+                                    <span>${a.text.replace(/\b(\d+(?:\.\d+)?(?:%|pp|K\+?|M))\b/g, '<span class="font-semibold gold">$1</span>')}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function toggleRole(id) {
+            const role = resumeData.roles.find(r => r.id === id);
+            role.expanded = !role.expanded;
+            renderRoles();
+        }
+
+        function filterExperience(t) {
+            currentFilter = t;
+            document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('btn-' + t).classList.add('active');
+            renderRoles();
+        }
+
+        window.onload = () => { renderToolkit(); renderRoles(); };
+    </script>
+</body>
+</html>
