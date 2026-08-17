@@ -58,6 +58,21 @@
         .tool-tag::after { content: ' · '; color: var(--border); }
         .tool-tag:last-child::after { content: ''; }
 
+        /* Architecture Diagram */
+        .arch-diagram { max-width: 720px; margin: 0 auto; }
+        .arch-layer { display: flex; align-items: stretch; gap: 12px; margin-bottom: 6px; }
+        .arch-box { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; flex: 1; transition: box-shadow 0.2s; }
+        .arch-box:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .arch-box-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .arch-box-desc { font-size: 12px; color: var(--secondary); line-height: 1.5; }
+        .arch-box-tools { font-size: 11px; color: var(--gold); margin-top: 6px; font-weight: 500; }
+        .arch-span { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 1px solid #F59E0B; border-radius: 8px; padding: 14px 16px; }
+        .arch-span .arch-box-title { color: #92400E; }
+        .arch-span .arch-box-desc { color: #92400E; opacity: 0.8; }
+        .arch-arrow { text-align: center; padding: 2px 0; color: var(--border); font-size: 18px; line-height: 1; }
+        .arch-arrow svg { width: 20px; height: 20px; margin: 0 auto; display: block; }
+        .arch-mesh-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: #FEF3C7; border-radius: 12px; font-size: 11px; font-weight: 600; color: #92400E; }
+
         /* Scroll */
         html { scroll-behavior: smooth; }
 
@@ -82,9 +97,10 @@
             <div class="flex items-center gap-6">
                 <a href="#story" class="nav-link hidden md:inline">Story</a>
                 <a href="#known-for" class="nav-link hidden md:inline">Strengths</a>
+                <a href="#platform" class="nav-link hidden md:inline">Platform</a>
                 <a href="#experience" class="nav-link hidden md:inline">Experience</a>
                 <a href="#believes" class="nav-link hidden md:inline">Beliefs</a>
-                <a href="AW-Resume-0726.pdf" download class="btn-download">
+                <a href="AW_Resume_0826.pdf" download class="btn-download">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Resume
                 </a>
@@ -97,9 +113,9 @@
         <!-- Hero -->
         <section class="pt-16 pb-12">
             <p class="text-sm font-semibold gold uppercase tracking-widest mb-4">Lead Product Manager, Data Platform</p>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] max-w-3xl">I turn messy data estates into platforms teams trust and leadership invest in.</h1>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] max-w-3xl">I productise self-serve data platforms &mdash; from ingestion to insight.</h1>
             <p class="mt-6 text-lg text-[#6b7280] leading-relaxed prose-col">
-                Governance, discovery, cost optimisation, platform operating model, observability &mdash; I cover the full platform lifecycle. Hands-on from SQL deep-dives to c-suite strategy decks, no handoff required.
+                Data product lifecycle, federated governance, discovery marketplace, quality observability &mdash; I build the infrastructure that lets domain teams ship trusted data products without waiting for a central team. Hands-on from SQL deep-dives to c-suite strategy decks, no handoff required.
             </p>
         </section>
 
@@ -118,7 +134,7 @@
                 <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Consuming Teams</p>
             </div>
             <div>
-                <p class="text-3xl font-extrabold tracking-tight gold">21</p>
+                <p class="text-3xl font-extrabold tracking-tight gold">23</p>
                 <p class="text-xs text-[#6b7280] uppercase tracking-wider font-medium mt-1">Capabilities</p>
             </div>
         </section>
@@ -128,9 +144,9 @@
             <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-6">My Story</h2>
             <div class="prose-col space-y-5 text-[15px] leading-relaxed text-[#374151]">
                 <p>People infrastructure in Shanghai. Product toolkit at Michigan. Technical depth in e-commerce and data warehousing.</p>
-                <p>At OVO, I started closest to the business &mdash; a forward-deployed PM in the customer care domain, shipping data products under data mesh principles and proving they could drive real value. From there I moved into core platform APIs, then took full ownership of the data platform: governance, discovery, cost optimisation, platform operating model, observability.</p>
-                <p>Every move was a zoom out &mdash; from one domain's data products, to the APIs everyone depends on, to the platform that underpins it all. Now I'm sole PM on a team of three, covering 21 capabilities and 20+ consuming teams.</p>
-                <p class="text-[#1a1a1a] font-medium">The thread through all of it: I build the trust and governance layers that let organisations make confident decisions.</p>
+                <p>At OVO, I started closest to the business &mdash; a forward-deployed PM in the customer care domain, shipping data products and proving they could drive real value. From there I moved into core platform APIs, then took full ownership of the data platform: the self-serve infrastructure that manages the entire data product lifecycle.</p>
+                <p>Every move was a zoom out &mdash; from one domain's data products, to the APIs everyone depends on, to the platform that underpins it all. Now I own 23 capabilities across ingestion, transformation, publishing, governance, discovery, and consumption &mdash; applying data mesh principles pragmatically so 20+ domain teams can self-serve.</p>
+                <p class="text-[#1a1a1a] font-medium">The thread through all of it: I build the self-serve infrastructure and governance layers that let domain teams ship trusted data products independently.</p>
             </div>
         </section>
 
@@ -245,16 +261,127 @@
             <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-8">What I'm Known For</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="known-card">
-                    <p class="text-lg font-bold mb-2">Evidence-Based Strategy</p>
-                    <p class="text-sm text-[#6b7280] leading-relaxed">I design the analytical frameworks that shape roadmap decisions &mdash; redundancy classification, discovery funnels, effort-value models. I don't trust anecdotes or surveys alone; I build behavioural analytics pipelines, write the SQL, and produce evidence packs that reframe where leadership invests.</p>
+                    <p class="text-lg font-bold mb-2">Self-Serve Data Platform</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">I build the end-to-end infrastructure &mdash; ingestion pipelines, managed transformation environments, data product publishing, and a marketplace for discovery and consumption. Domain teams self-serve without central team dependency. Data mesh principles applied pragmatically, not dogmatically.</p>
                 </div>
                 <div class="known-card">
-                    <p class="text-lg font-bold mb-2">Data Governance</p>
-                    <p class="text-sm text-[#6b7280] leading-relaxed">I build governance as infrastructure, not policy documents. Auditable access grants via GitHub PRs, multi-region replication, taxonomy design &mdash; enforcement baked into the platform.</p>
+                    <p class="text-lg font-bold mb-2">Infrastructure-Enforced Governance</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">Column-level security, architectural constraints, and data quality observability &mdash; all baked into the platform. Compliance through code: auditable access grants via GitHub PRs, multi-region replication, taxonomy design, and automated quality monitoring. Not policy documents.</p>
                 </div>
                 <div class="known-card">
-                    <p class="text-lg font-bold mb-2">Cost &amp; Capacity</p>
-                    <p class="text-sm text-[#6b7280] leading-relaxed">Cost optimisation isn't a one-off analysis &mdash; it's an operating model. I turn observability data into structured cost insights, designed a 5-category redundancy classification framework, and validated every recommendation before presenting it. Minimal headcount, maximum impact &mdash; leveraging deep platform expertise to generate outsized value.</p>
+                    <p class="text-lg font-bold mb-2">Evidence-Led Platform Strategy</p>
+                    <p class="text-sm text-[#6b7280] leading-relaxed">Analytical frameworks, cost analysis, and behavioural analytics that shape where leadership invests. I build the evidence packs &mdash; redundancy classification, discovery funnels, effort-value models &mdash; and present them from SQL deep-dives to c-suite strategy decks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Architecture -->
+        <section id="platform" class="pb-16">
+            <h2 class="text-xs font-semibold text-[#6b7280] uppercase tracking-widest mb-3">Platform at a Glance</h2>
+            <p class="text-sm text-[#6b7280] mb-2">The self-serve data platform I own end-to-end &mdash; 23 capabilities spanning the full data product lifecycle.</p>
+            <div class="flex flex-wrap gap-2 mb-8">
+                <span class="arch-mesh-label">Domain Ownership</span>
+                <span class="arch-mesh-label">Data as a Product</span>
+                <span class="arch-mesh-label">Self-Serve Infrastructure</span>
+                <span class="arch-mesh-label">Federated Governance</span>
+            </div>
+            <div class="arch-diagram">
+                <!-- Layer 1: Ingestion -->
+                <div class="arch-layer">
+                    <div class="arch-box" style="flex: 2;">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M10 4l4 4-4 4" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Ingestion
+                        </div>
+                        <div class="arch-box-desc">CDC replication and event streaming from source systems into the data warehouse. Backfill mechanisms, replication monitoring, and policy tag integration.</div>
+                        <div class="arch-box-tools">CDC Pipelines &middot; Event Streaming &middot; Replication Monitoring</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4h8v8H4z" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 8h8M8 4v8" stroke="#D97706" stroke-width="1" stroke-linecap="round"/></svg>
+                            Transformation
+                        </div>
+                        <div class="arch-box-desc">Managed environments with pre-configured tooling. Domain teams run complex transformations independently.</div>
+                        <div class="arch-box-tools">Managed Data Environments &middot; Dataform</div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="arch-arrow">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M6 12l4 4 4-4" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+
+                <!-- Layer 2: Publishing -->
+                <div class="arch-layer">
+                    <div class="arch-box" style="border-color: #D97706; border-width: 1.5px;">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V3h7l3 3v7a1 1 0 01-1 1H4a1 1 0 01-1-1z" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 3v3h3" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Data Product Lifecycle
+                        </div>
+                        <div class="arch-box-desc">Domain teams declare, version, and publish data products through a specification registry. Automated CI/CD validates and distributes on merge. Full lifecycle: creation &rarr; versioning &rarr; deprecation &rarr; removal.</div>
+                        <div class="arch-box-tools">Data Product Publisher &middot; Specs &middot; Versioning &middot; Lifecycle Management</div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="arch-arrow">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M6 12l4 4 4-4" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+
+                <!-- Layer 3: Marketplace -->
+                <div class="arch-layer">
+                    <div class="arch-box">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#D97706" stroke-width="1.5"/><path d="M8 5v3l2 2" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            Data Catalogue
+                        </div>
+                        <div class="arch-box-desc">Searchable catalogue with domain-based organisation, ownership metadata, and lineage tracking. Self-serve access requests.</div>
+                        <div class="arch-box-tools">Discovery &middot; Lineage &middot; Metadata</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="#D97706" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            Central Marketplace
+                        </div>
+                        <div class="arch-box-desc">Single consumption layer for all published data products. Cross-project sharing via linked datasets. Architectural constraint: all reads flow through here.</div>
+                        <div class="arch-box-tools">BigQuery Marketplace &middot; Analytics Hub</div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="arch-arrow">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M6 12l4 4 4-4" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+
+                <!-- Layer 4: Consumption -->
+                <div class="arch-layer">
+                    <div class="arch-box">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-4 3 2 3-5 3 3" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            BI &amp; Semantic Layer
+                        </div>
+                        <div class="arch-box-desc">Governed business definitions and self-serve analytics. Analyst upskilling programme driving adoption.</div>
+                        <div class="arch-box-tools">Looker &middot; LookML &middot; Semantic Models</div>
+                    </div>
+                    <div class="arch-box">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 110 12A6 6 0 018 2z" stroke="#D97706" stroke-width="1.5"/><path d="M6 6h1v4H6zM9 6h1v4H9z" fill="#D97706"/></svg>
+                            AI-Native Access
+                        </div>
+                        <div class="arch-box-desc">MCP servers enabling AI agents to query governed data safely with cost ceilings, read-only enforcement, and per-agent attribution.</div>
+                        <div class="arch-box-tools">MCP Servers &middot; Cost Guardrails &middot; Agent Labelling</div>
+                    </div>
+                </div>
+
+                <!-- Spanning governance bar -->
+                <div style="margin-top: 16px;">
+                    <div class="arch-span">
+                        <div class="arch-box-title">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 6v4l6 4 6-4V6L8 2z" stroke="#92400E" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6v4M6 8h4" stroke="#92400E" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            Governance &amp; Observability <span style="font-weight: 400; font-size: 11px;">&mdash; spans all layers</span>
+                        </div>
+                        <div class="arch-box-desc">Column-level security &middot; Architectural constraints enforced as code &middot; Data quality monitoring (freshness, volume, schema) &middot; Custom assertions &middot; Automated alerting &middot; Cost observability &middot; Platform metrics</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -348,11 +475,11 @@
     <script>
         const resumeData = {
             toolkit: [
-                { category: 'Data Platform', tools: ['BigQuery', 'DataHub', 'Dataform', 'Analytics Hub', 'Policy Tags', 'Looker', 'LookML'] },
+                { category: 'Data Platform', tools: ['BigQuery', 'DataHub', 'Dataform', 'Analytics Hub', 'Policy Tags', 'Looker', 'LookML', 'Data Product Publisher'] },
                 { category: 'Analysis & Notebooks', tools: ['SQL', 'Python', 'Jupyter', 'Looker Studio'] },
                 { category: 'GCP Infrastructure', tools: ['Cloud SQL', 'Datastream', 'Pub/Sub', 'Terraform', 'GCS'] },
                 { category: 'Product Management', tools: ['Jira', 'Confluence', 'Miro', 'Google Slides', 'Airtable'] },
-                { category: 'AI & Automation', tools: ['Claude Code', 'LLM Evaluation', 'Agentic Workflows'] },
+                { category: 'AI & Automation', tools: ['Claude Code', 'MCP Servers', 'LLM Evaluation', 'Agentic Workflows'] },
                 { category: 'E-commerce (prior)', tools: ['Algolia', 'Magento', 'CommerceTools', 'Vue Storefront'] },
                 { category: 'Design & UX', tools: ['Figma', 'Adobe XD', 'Miro'] }
             ],
@@ -365,11 +492,11 @@
                     location: 'London, UK',
                     expanded: true,
                     achievements: [
-                        { text: 'Defined the multi-year platform strategy for senior execs (VP Product & AI, Director of Data & AI) across four pillars: self-serve marketplace, trust & governance, observability & cost, and platform foundation.', tags: ['strategy'] },
-                        { text: 'Shipped column-level security across 3 EU regions — the governance foundation for safe AI consumption of sensitive data. Driving v2 with time-based access controls and data masking.', tags: ['governance', 'technical'] },
-                        { text: 'Led platform-wide cost analysis identifying over 50% of shared compute as preventable. Designed the operating model to remediate at scale with minimal headcount.', tags: ['technical', 'strategy'] },
-                        { text: 'Authored the investment case to evolve the platform from manual operations to an agentic data engine — autonomous agents across all four pillars that scale with zero marginal headcount, shifting the financial model from recurring OPEX to depreciable CAPEX.', tags: ['strategy', 'business'] },
-                        { text: 'Established data trust and quality layers — data product publishing, nomination programme, behavioural analytics — positioning the platform as the governed foundation for AI-first transformation.', tags: ['governance', 'strategy'] }
+                        { text: 'Own the end-to-end self-serve data platform — 23 capabilities across ingestion, transformation, publishing, governance, discovery, and consumption — serving 300+ users across 20+ domain teams. Platform designed on data mesh principles: domain ownership, data-as-a-product lifecycle, and federated computational governance.', tags: ['strategy', 'technical'] },
+                        { text: 'Shipped the data product lifecycle: domain teams declare, version, and publish data products via a GitHub registry, with automated distribution to a central BigQuery marketplace and searchable data catalogue.', tags: ['technical', 'governance'] },
+                        { text: 'Shipped column-level security across 3 EU regions and encoded architectural constraints as platform rules — governance enforced through infrastructure, not documents. Driving v2 with time-based access and data masking.', tags: ['governance', 'technical'] },
+                        { text: 'Built the data & insight marketplace — data catalogue for discovery and lineage, Looker semantic layer (15+ analysts in upskilling programme), and MCP servers enabling AI agents to query governed data safely — backed by data quality observability (freshness, volume, schema, custom assertions).', tags: ['technical', 'strategy'] },
+                        { text: 'Led cost analysis identifying 50%+ preventable compute; designed remediation at scale. Authored investment case for an agentic data engine — autonomous agents across all four pillars, shifting from OPEX to depreciable CAPEX.', tags: ['strategy', 'business'] }
                     ]
                 },
                 {
